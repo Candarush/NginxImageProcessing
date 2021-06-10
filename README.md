@@ -101,7 +101,7 @@
 После этого приостановим uwsgi:  
 
     (projectenv) [vladislav@localhost project]$ fg  
-    python app.py  
+    uwsgi --socket 0.0.0.0:8000 --protocol=http -w wsgi
     ^C  
 На этом работа с виртуальной средой окончена. Выйдем из нее командой deactivate:  
 
