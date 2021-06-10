@@ -151,7 +151,7 @@
 "Environment" - директория виртуальной среды;  
 "ExecStart" - команда для запуска процесса;  
 "WantedBy" - когда запускаться службе.  
-Запустим созданнуб службу:  
+Запустим созданную службу:  
 
     [vladislav@localhost project]$ sudo systemctl start project  
     [vladislav@localhost project]$ sudo systemctl enable project  
