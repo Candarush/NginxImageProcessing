@@ -25,7 +25,7 @@ def validate_image(stream):
 	format = imghdr.what(None, header)
 	if not format:
 		return None
-	return '.tif' 
+	return format
 
 def get_uri(img):
 	rawBytes = io.BytesIO()
