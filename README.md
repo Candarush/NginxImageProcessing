@@ -8,12 +8,12 @@
 3.1 В идеале - захостить python приложение из предыдущего семестра, при загрузке снимка рисовать в веб карту NDVI.  
 3.2 Простой вариант - форма с загрузкой файла, отображение его на странице.  
   
-## Ход выполнения работы:  
+# Ход выполнения работы:  
 Выполнять работу будем на Cent OS версии 7.  
 Предварительно создадим пользователя "vladislav" и авторизуемся.  
 Создадим директорию для проека: "mkdir ~/project/"  
   
-# Шаг 1. Установка необходимых компонентов.  
+## Шаг 1. Установка необходимых компонентов.  
 Установим репозиторий EPEL, содержащий дополнительные пакеты.  
 
     [vladislav@localhost project]$ sudo yum install epel-release
@@ -22,7 +22,7 @@
 
     [vladislav@localhost project]$ sudo yum install python-pip python-devel gcc nginx  
   
-# Шаг 2. Создание виртуальной среды Python.  
+## Шаг 2. Создание виртуальной среды Python.  
 Для того чтобы изолировать приложение настроим виртуальную среду.  
 Установим пакет virtualenv:  
 
@@ -37,7 +37,7 @@
 
      (projectenv) [vladislav@localhost project]$  
   
-# Шаг 3. Создание и настройка приложения Flask.  
+## Шаг 3. Создание и настройка приложения Flask.  
 Установим uwsgi и flask:  
 
     (projectenv) [vladislav@localhost project]$ pip install uwsgi flask  
@@ -74,7 +74,7 @@
     python app.py  
     ^C  
   
-# Шаг 3. Создание точки входа WSGI.  
+## Шаг 3. Создание точки входа WSGI.  
 Создадим файл wsgi.py:  
 
     (projectenv) [vladislav@localhost project]$ vi ~/project/wsgi.py  
@@ -84,7 +84,7 @@
     if __name__ == "__main__":  
       app.run()  
   
-# Шаг 3. Настройка конфигурации uWSGI.  
+## Шаг 4. Настройка конфигурации uWSGI.  
 Для начала протестируем что uWSGI может обслуживать наше приложение:  
 
     (projectenv) [vladislav@localhost project]$ uwsgi --socket 0.0.0.0:8000 --protocol=http -w wsgi &  
@@ -124,7 +124,7 @@
 "chmod-socket = 660" - права на процесс uWSGI;  
 "vacuum = true" - сокет будет очищен по завершении работы процесса;  
   
-# Шаг 4. Создание файла модуля systemd.  
+## Шаг 5. Создание файла модуля systemd.  
 Создадим файл службы:  
 
     [vladislav@localhost project]$ sudo vi /etc/systemd/system/project.service  
@@ -155,7 +155,7 @@
     [vladislav@localhost project]$ sudo systemctl start project  
     [vladislav@localhost project]$ sudo systemctl enable project  
   
-# Шаг 4. Настройка Nginx.  
+## Шаг 6. Настройка Nginx.  
 Теперь необходимо настроить Nginx для передачи веб-запросов в  сокет с использованием uWSGI протокола.  
 Откроем файл конфигурации Nginx:  
 
@@ -196,7 +196,7 @@
     [vladislav@localhost project]$ sudo systemctl start nginx  
     [vladislav@localhost project]$ sudo systemctl enable nginx  
   
-Вывод:  
+# Вывод:  
 В ходе выполнения курсовой работы было создане приложение Flask в виртуальной средe, позволяющее загружать файлы формата ".tif" и получать цветное изображение NDVI. 
 Была создана и настроена точка входа WSGI, с помощью котрой любой сервер приложений, поддерживающий WSGI, мог взаимодействовать с приложением Flask. 
 Была создана служба systemd для автоматического запуска uWSGI при загрузке системы. 
