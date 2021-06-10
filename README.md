@@ -118,7 +118,8 @@
     socket = project.sock  
     chmod-socket = 660  
     vacuum = true  
-где "module = wsgi" - означает что uWSGI будет запускаться в главном режиме;  
+где "module = wsgi" - модуль, созданный ранее файл "wsgi.py";
+"master = true" - означает что uWSGI будет запускаться в главном режиме;  
 "processes = 3" - будет иметь 3 рабочих процесса для обслуживания запросов;  
 "socket = project.sock" - сокет, который будет использовать uWSGI;  
 "chmod-socket = 660" - права на процесс uWSGI;  
