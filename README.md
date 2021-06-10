@@ -82,7 +82,7 @@
 
     from project import app  
     if __name__ == "__main__":  
-      application.run()  
+      app.run()  
   
 # Шаг 3. Настройка конфигурации uWSGI.  
 Для начала протестируем что uWSGI может обслуживать наше приложение:  
