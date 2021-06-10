@@ -16,23 +16,23 @@
 # Шаг 1. Установка необходимых компонентов.  
 Установим репозиторий EPEL, содержащий дополнительные пакеты.  
 
-    [vladislav@localhost project]# sudo yum install epel-release
+    [vladislav@localhost project]$ sudo yum install epel-release
 
 Установим pip диспетчер пакетов Python, а также файлы разработки Python, необходимые для сборки uWSGI, а также установим Nginx.  
 
-    [vladislav@localhost project]#sudo yum install python-pip python-devel gcc nginx  
+    [vladislav@localhost project]$ sudo yum install python-pip python-devel gcc nginx  
   
 # Шаг 2. Создание виртуальной среды Python.  
 Для того чтобы изолировать приложение настроим виртуальную среду.  
 Установим пакет virtualenv:  
 
-    [vladislav@localhost project]# sudo pip install virtualenv  
+    [vladislav@localhost project]$ sudo pip install virtualenv  
 Создадим видтуальную среду:  
 
-     [vladislav@localhost project]# virtualenv projectvenv  
+     [vladislav@localhost project]$ virtualenv projectvenv  
 Активируем её:  
 
-    [vladislav@localhost project]# source projectvenv/bin/activate  
+    [vladislav@localhost project]$ source projectvenv/bin/activate  
 Убедимся что мы начали работу в виртуальной среде. Ввод терминала выглядит следующим образом:  
 
      (projectenv) [vladislav@localhost project]$  
