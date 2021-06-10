@@ -138,7 +138,7 @@
     Group=nginx  
     WorkingDirectory=/home/vladislav/project  
     Environment="PATH=/home/vladislav/project/projectvenv/bin"  
-    ExecStart=/home/vladislav/project/projectvenv/bin/uwsgi --ini myproject.ini  
+    ExecStart=/home/vladislav/project/projectvenv/bin/uwsgi --ini project.ini  
     [Install]  
     WantedBy=multi-user.target  
 где "[Unit]", "[Service]", "[Install]" - заголовки разделов;  
