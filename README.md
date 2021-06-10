@@ -28,13 +28,13 @@
     [vladislav@localhost project]$ sudo pip install virtualenv  
 Создадим видтуальную среду:  
 
-     [vladislav@localhost project]$ virtualenv projectvenv  
+    [vladislav@localhost project]$ virtualenv projectvenv  
 Активируем её:  
 
     [vladislav@localhost project]$ source projectvenv/bin/activate  
 Убедимся что мы начали работу в виртуальной среде. Ввод терминала выглядит следующим образом:  
 
-     (projectvenv) [vladislav@localhost project]$  
+    (projectvenv) [vladislav@localhost project]$  
   
 ## Шаг 3. Создание и настройка приложения Flask.  
 Установим uwsgi и flask:  
