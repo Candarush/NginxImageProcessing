@@ -190,7 +190,7 @@
     [vladislav@localhost project]$ sudo usermod -a -G vladislav nginx  
 Предоставим группе пользователей права на выполнение в домашнем каталоге:  
 
-    [vladislav@localhost project]$ chmod 710 /home/user  
+    [vladislav@localhost project]$ chmod 710 /home/vladislav  
 Наконец, запустим Nginx:  
 
     [vladislav@localhost project]$ sudo systemctl start nginx  
