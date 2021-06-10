@@ -34,20 +34,20 @@
     [vladislav@localhost project]$ source projectvenv/bin/activate  
 Убедимся что мы начали работу в виртуальной среде. Ввод терминала выглядит следующим образом:  
 
-     (projectenv) [vladislav@localhost project]$  
+     (projectvenv) [vladislav@localhost project]$  
   
 ## Шаг 3. Создание и настройка приложения Flask.  
 Установим uwsgi и flask:  
 
-    (projectenv) [vladislav@localhost project]$ pip install uwsgi flask  
+    (projectvenv) [vladislav@localhost project]$ pip install uwsgi flask  
 Создадим приложение Flask:  
 
-    (projectenv) [vladislav@localhost project]$ vi ~/project/app.py  
+    (projectvenv) [vladislav@localhost project]$ vi ~/project/app.py  
 (Исходный код приложения продемонмтрирован в данном репозитории)  
 Сохраним и закроем файл нажав ESC, а затем нажав Ctrl+Z,Z.  
 Протестируем созданное приложение. Для этого запустим его в фоновом режиме:  
 
-      (projectenv) [vladislav@localhost project]$ python ~/project/app.py &  
+    (projectvenv) [vladislav@localhost project]$ python ~/project/app.py &  
 > *Serving Flask app 'app' (lazy loading)  
 > *Environment: prodction  
 > *Debug mode: on  
@@ -69,14 +69,14 @@
       
 После этого остановим Flask приложение с помощью fg:  
 
-    (projectenv) [vladislav@localhost project]$ fg  
+    (projectvenv) [vladislav@localhost project]$ fg  
     python app.py  
     ^C  
   
 ## Шаг 3. Создание точки входа WSGI.  
 Создадим файл wsgi.py:  
 
-    (projectenv) [vladislav@localhost project]$ vi ~/project/wsgi.py  
+    (projectvenv) [vladislav@localhost project]$ vi ~/project/wsgi.py  
 Внутри напишем:  
 
     from project import app  
@@ -86,10 +86,10 @@
 ## Шаг 4. Настройка конфигурации uWSGI.  
 Для начала протестируем что uWSGI может обслуживать наше приложение:  
 
-    (projectenv) [vladislav@localhost project]$ uwsgi --socket 0.0.0.0:8000 --protocol=http -w wsgi &  
+    (projectvenv) [vladislav@localhost project]$ uwsgi --socket 0.0.0.0:8000 --protocol=http -w wsgi &  
 Убедимся что по указанному ранее адресу, но с портом 8000 находится содержимое html страницы.  
 
-    (projectenv) [vladislav@localhost project]$ curl -L http://10.0.15:8000 | head -n 5  
+    (projectvenv) [vladislav@localhost project]$ curl -L http://10.0.15:8000 | head -n 5  
     
 > \<!DOCTYPE html>  
 > \<html lang="ru">  
@@ -99,12 +99,12 @@
 
 После этого приостановим uwsgi:  
 
-    (projectenv) [vladislav@localhost project]$ fg  
+    (projectvenv) [vladislav@localhost project]$ fg  
     uwsgi --socket 0.0.0.0:8000 --protocol=http -w wsgi
     ^C  
 На этом работа с виртуальной средой окончена. Выйдем из нее командой deactivate:  
 
-    (projectenv) [vladislav@localhost project]$ deactivate  
+    (projectvenv) [vladislav@localhost project]$ deactivate  
 Создадим файл конфигурации uWSGI:  
 
     [vladislav@localhost project]$ vi ~/project/project.ini  
