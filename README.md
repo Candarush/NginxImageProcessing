@@ -52,7 +52,7 @@
 Протестируем созданное приложение. Для этого запустим его в фоновом режиме:  
 
     (projectvenv) [vladislav@localhost project]$ python3 ~/project/application.py &  
-> *Serving Flask app 'app' (lazy loading)  
+> *Serving Flask app 'application' (lazy loading)  
 > *Environment: prodction  
 > *Debug mode: on  
 > *Running on all addresses.  
@@ -85,7 +85,7 @@
 
     import application  
     if __name__ == "__main__":  
-      app.run()  
+      application.run()  
   
 ## Шаг 4. Настройка конфигурации uWSGI.  
 Для начала протестируем что uWSGI может обслуживать наше приложение:  
