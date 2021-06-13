@@ -19,13 +19,13 @@
 
 Установим pip диспетчер пакетов Python, а также файлы разработки Python, необходимые для сборки uWSGI, а также установим Nginx.  
 
-    [vladislav@localhost project]$ sudo yum install python-pip python-devel gcc nginx  
+    [vladislav@localhost project]$ sudo yum install python3-pip python3-devel gcc nginx  
   
 ## Шаг 2. Создание виртуальной среды Python.  
 Для того чтобы изолировать приложение настроим виртуальную среду.  
 Установим пакет virtualenv:  
 
-    [vladislav@localhost project]$ sudo pip install virtualenv  
+    [vladislav@localhost project]$ sudo pip3 install virtualenv  
 Создадим видтуальную среду:  
 
     [vladislav@localhost project]$ virtualenv projectvenv  
@@ -39,20 +39,24 @@
 ## Шаг 3. Создание и настройка приложения Flask.  
 Установим uwsgi и flask:  
 
-    (projectvenv) [vladislav@localhost project]$ pip install uwsgi flask  
+    (projectvenv) [vladislav@localhost project]$ pip3 install wheel uwsgi flask  
 Создадим приложение Flask:  
 
     (projectvenv) [vladislav@localhost project]$ vi ~/project/app.py  
 (Исходный код приложения продемонмтрирован в данном репозитории)  
 Сохраним и закроем файл нажав ESC, а затем нажав Ctrl+Z,Z.  
+
+Установим модули для работы приложения:
+    
+    (projectvenv) [vladislav@localhost project]$ pip3 install Pillow opencv-python mesa-liblibGL.x86_64
 Протестируем созданное приложение. Для этого запустим его в фоновом режиме:  
 
-    (projectvenv) [vladislav@localhost project]$ python ~/project/app.py &  
+    (projectvenv) [vladislav@localhost project]$ python3 ~/project/application.py &  
 > *Serving Flask app 'app' (lazy loading)  
 > *Environment: prodction  
 > *Debug mode: on  
 > *Running on all addresses.  
-> *Running on http://10.0.15:5000 (Press CTRL+C) to quit)  
+> *Running on http://10.0.2.15:5000 (Press CTRL+C) to quit)  
 
 А затем обратимся к содержимому с помощью curl. Выведем первые 8 строчек html страницы: 
 
@@ -70,7 +74,7 @@
 После этого остановим Flask приложение с помощью fg:  
 
     (projectvenv) [vladislav@localhost project]$ fg  
-    python app.py  
+    python3 app.py  
     ^C  
   
 ## Шаг 3. Создание точки входа WSGI.  
@@ -79,7 +83,7 @@
     (projectvenv) [vladislav@localhost project]$ vi ~/project/wsgi.py  
 Внутри напишем:  
 
-    from project import app  
+    import application  
     if __name__ == "__main__":  
       app.run()  
   
@@ -89,7 +93,7 @@
     (projectvenv) [vladislav@localhost project]$ uwsgi --socket 0.0.0.0:8000 --protocol=http -w wsgi &  
 Убедимся что по указанному ранее адресу, но с портом 8000 находится содержимое html страницы.  
 
-    (projectvenv) [vladislav@localhost project]$ curl -L http://10.0.15:8000 | head -n 5  
+    (projectvenv) [vladislav@localhost project]$ curl -L http://10.0.2.15:8000 | head -n 5  
     
 > \<!DOCTYPE html>  
 > \<html lang="ru">  
@@ -113,13 +117,13 @@
     [uwsgi]  
     module = wsgi  
     master = true  
-    processes = 3  
+    processes = 10  
     socket = project.sock  
     chmod-socket = 660  
     vacuum = true  
 где "module = wsgi" - исполняемый модуль, созданный ранее файл "wsgi.py";  
 "master = true" - означает что uWSGI будет запускаться в главном режиме;  
-"processes = 3" - будет иметь 3 рабочих процесса для обслуживания запросов;  
+"processes = 10" - будет иметь 10 рабочих процесса для обслуживания запросов;  
 "socket = project.sock" - сокет, который будет использовать uWSGI;  
 "chmod-socket = 660" - права на процесс uWSGI;  
 "vacuum = true" - сокет будет очищен по завершении работы процесса;  
@@ -152,6 +156,7 @@
 "WantedBy" - когда запускаться службе.  
 Запустим созданную службу:  
 
+    [vladislav@localhost project]$ sudo systemctl daemon reload  
     [vladislav@localhost project]$ sudo systemctl start project  
     [vladislav@localhost project]$ sudo systemctl enable project  
   
