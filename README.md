@@ -74,7 +74,7 @@
 После этого остановим Flask приложение с помощью fg:  
 
     (projectvenv) [vladislav@localhost project]$ fg  
-    python3 app.py  
+    python3 application.py  
     ^C  
   
 ## Шаг 3. Создание точки входа WSGI.  
